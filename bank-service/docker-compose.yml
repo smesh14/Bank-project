@@ -1,0 +1,24 @@
+version: '3'
+services:
+  bank-service-db:
+    container_name: bank-service-db
+    image: mcr.microsoft.com/mssql/server
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=bank-service-password
+      - "TZ=Asia/Tbilisi"
+    volumes:
+      - bank-service-db:/var/opt/mssql
+  bank-service:
+    container_name: bank-service
+    build: .
+    ports:
+      - 1098:1098
+      - 1099:1099
+      - 8080:8080
+      - 8787:8787
+
+volumes:
+  bank-service-db:
